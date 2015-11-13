@@ -1,12 +1,19 @@
 {
     "name": "elixir/elixir-di",
     "description": "Component dependency injection",
+    "version": "1.0.0",
     "license": "BSD-3-Clause",
     "keywords": [
         "elixir",
         "di"
     ],
     "homepage": "https://github.com/cedtanghe/elixir-di",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/cedtanghe/elixir-dispatcher"
+        }
+    ],
     "require": {
         "php": ">=5.4",
         "elixir/elixir-dispatcher": "~1.0"
