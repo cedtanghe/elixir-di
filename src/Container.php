@@ -10,7 +10,7 @@ use Elixir\Dispatcher\DispatcherTrait;
 /**
  * @author Cédric Tanghe <ced.tanghe@gmail.com>
  */
-class Container implements ContainerResolvableInterface, DispatcherInterface
+class Container implements ContainerResolvableInterface, DispatcherInterface, \ArrayAccess
 {
     use DispatcherTrait;
 
@@ -841,6 +841,43 @@ class Container implements ContainerResolvableInterface, DispatcherInterface
         return isset($this->resolved[$key]) && $this->resolved[$key];
     }
 
+    /**
+     * @ignore
+     */
+    public function offsetExists($key)
+    {
+        return $this->has($key);
+    }
+
+    /**
+     * @ignore
+     */
+    public function offsetSet($key, $value) 
+    {
+        if (null === $key)
+        {
+            throw new \InvalidArgumentException('The key can not be undefined.');
+        }
+
+        $this->bind($key, $value);
+    }
+    
+    /**
+     * @ignore
+     */
+    public function offsetGet($key) 
+    {
+        return $this->get($key);
+    }
+
+    /**
+     * @ignore
+     */
+    public function offsetUnset($key)
+    {
+        $this->unbind($key);
+    }
+    
     /**
      * {@inheritdoc}
      */
