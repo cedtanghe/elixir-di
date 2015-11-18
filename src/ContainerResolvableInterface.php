@@ -33,4 +33,20 @@ interface ContainerResolvableInterface extends ContainerInterface
      * @return array
      */
     public function resolve($callback, array $options = []);
+    
+    /**
+     * @param string $callback
+     * @param array $options
+     * @return array
+     * @throws \RuntimeException
+     */
+    public function resolveCallable($callback, array $options = []);
+    
+    /**
+     * @param string $class
+     * @param array $options
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    public function resolveClass($class, array $options = []);
 }

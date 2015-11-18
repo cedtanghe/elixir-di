@@ -314,12 +314,6 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function resolve($callback, array $options = [])
     {
-        if (isset($options['available']))
-        {
-            $options['resolver_arguments_available'] = $options['available'];
-            unset($options['available']);
-        }
-        
         if (is_string($callback) && false === strpos($callback, '::'))
         {
             return $this->get($callback, $options);
@@ -336,7 +330,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      * @return array
      * @throws \RuntimeException
      */
-    protected function resolveCallable($callback, array $options = [])
+    public function resolveCallable($callback, array $options = [])
     {
         if (is_string($callback) && false !== strpos($callback, '::'))
         {
@@ -364,7 +358,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      * @return mixed
      * @throws \RuntimeException
      */
-    protected function resolveClass($class, array $options = [])
+    public function resolveClass($class, array $options = [])
     {
         $contextual = $this->getContextualObject($class);
         
