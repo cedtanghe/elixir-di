@@ -2,6 +2,7 @@
     "name": "elixir/elixir-di",
     "description": "Component dependency injection",
     "version": "1.0.0",
+	"minimum-stability": "dev",
     "license": "BSD-3-Clause",
     "keywords": [
         "elixir",
