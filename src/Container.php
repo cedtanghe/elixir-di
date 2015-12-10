@@ -148,7 +148,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function get($key, array $options = [], $default = null)
     {
-        $options += ['throw' => true, 'rebuild' => false, 'rebuild_all' => false];
+        $options += ['throw' => true, 'rebuild' => false, 'rebuild_all' => false, 'resolve' => true];
         
         if ($options['rebuild_all'])
         {
@@ -206,6 +206,11 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
         } 
         else
         {
+            if (!$options['resolve'])
+            {
+                return is_callable($default) ? call_user_func($default) : $default;
+            }
+            
             try
             {
                 if (!$options['rebuild_all'])
