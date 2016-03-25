@@ -91,7 +91,7 @@ interface ContainerInterface
     public function findByTag($tag, array $options = []);
     
     /**
-     * @param array|ContainerInterface $data 
+     * @param ContainerInterface $container 
      */
-    public function merge($data);
+    public function merge(self $container);
 }

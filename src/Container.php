@@ -880,52 +880,31 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
     /**
      * {@inheritdoc}
      */
-    public function merge($data) 
+    public function merge(ContainerInterface $container) 
     {
-        if ($data instanceof self) 
-        {
-            $all = $data->all([
-                'raw' => true,
-                'providers' => true,
-                'contextual_bindings' => true
-            ]);
-            
-            foreach ($gets['services'] as $key => $config)
-            {
-                $this->bind($key, $config['value'], $config);
-                
-                if ($config['resolved'] && isset($config['instance']))
-                {
-                    $this->resolved[$key] = true;
-                    $this->instances[$key] = $config['instance'];
-                }
-            }
-            
-            foreach ($all['providers'] as $provider)
-            {
-                $this->addProvider($provider);
-            }
-            
-            $this->contextual = array_merge($this->contextual, $all['contextual_bindings']);
-        }
-        else
-        {
-            foreach ($data as $key => $service)
-            {
-                if (is_array($service) && isset($service['options']))
-                {
-                    $value = $service['value'];
-                    $options = $service['options'];
-                } 
-                else 
-                {
-                    $value = $service;
-                    $options = [];
-                }
+        $data = $container->all([
+            'raw' => true,
+            'providers' => true,
+            'contextual_bindings' => true
+        ]);
 
-                $this->bind($key, $value, $options);
+        foreach ($gets['services'] as $key => $config)
+        {
+            $this->bind($key, $config['value'], $config);
+
+            if ($config['resolved'] && isset($config['instance']))
+            {
+                $this->resolved[$key] = true;
+                $this->instances[$key] = $config['instance'];
             }
         }
+
+        foreach ($data['providers'] as $provider)
+        {
+            $this->addProvider($provider);
+        }
+
+        $this->contextual = array_merge($this->contextual, $data['contextual_bindings']);
     }
 
     /**
