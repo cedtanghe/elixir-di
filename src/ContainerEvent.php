@@ -22,7 +22,7 @@ class ContainerEvent extends Event
     /**
      * @var string
      */
-    const TAGGED = 'taged';
+    const TAGGED = 'tagged';
     
     /**
      * @var string
