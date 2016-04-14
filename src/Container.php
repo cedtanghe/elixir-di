@@ -148,7 +148,12 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function get($key, array $options = [], $default = null)
     {
-        $options += ['throw' => true, 'rebuild' => false, 'rebuild_all' => false, 'resolve' => true];
+        $options += [
+            'throw' => false, 
+            'rebuild' => false, 
+            'rebuild_all' => false, 
+            'resolve' => false
+        ];
         
         if ($options['rebuild_all'])
         {
@@ -319,7 +324,12 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function resolve($callback, array $options = [])
     {
-        if (is_string($callback) && false === strpos($callback, '::'))
+        $options += [
+            'resolve' => true, 
+            'throw' => true
+        ];
+        
+        if (!is_callable($callback) && false === strpos($callback, '::'))
         {
             return $this->get($callback, $options);
         }
@@ -337,6 +347,11 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function resolveCallable($callback, array $options = [])
     {
+        $options += [
+            'resolve' => true, 
+            'throw' => true
+        ];
+        
         if (is_string($callback) && false !== strpos($callback, '::'))
         {
             $callback = explode('::', $callback);
@@ -365,6 +380,11 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function resolveClass($class, array $options = [])
     {
+        $options += [
+            'resolve' => true, 
+            'throw' => true
+        ];
+        
         $contextual = $this->getContextualObject($class);
         
         if (null !== $contextual)

@@ -66,7 +66,7 @@ class ContainerEvent extends Event
     /**
      * @return string
      */
-    public function getName()
+    public function getService()
     {
         return $this->service;
     }
