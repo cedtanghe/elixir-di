@@ -535,8 +535,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
      */
     public function instance($key, $value, array $options = [])
     {
-        $options['shared'] = true;
-        $this->bind($key, $this->wrap($value), $options);
+        $this->share($key, $this->wrap($value), $options);
         
         $this->resolved[$key] = true;
         $this->instances[$key] = $value;

@@ -33,5 +33,6 @@
         }
     },
     "suggest": {
+        "container-interop/container-interop": "Container Interoperability"
     }
 }
