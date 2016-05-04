@@ -53,4 +53,12 @@ class InteroptContainer implements InteropContainerInterface
     {
         return $this->container->has($id);
     }
+    
+    /**
+     * @ignore
+     */
+    public function __call($method, $arguments) 
+    {
+        return call_user_func_array([$this->container, $method], $arguments);
+    }
 }
