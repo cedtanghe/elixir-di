@@ -47,6 +47,11 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
     /**
      * @var array 
      */
+    protected $initializers = [];
+    
+    /**
+     * @var array 
+     */
     protected $contextual = [];
     
     /**
@@ -160,6 +165,8 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
             $options['rebuild'] = true;
         }
         
+        $create = true;
+        
         if ($this->has($key))
         {
             if (isset($this->aliases[$key]))
@@ -170,6 +177,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
             if (array_key_exists($key, $this->instances) && !$options['rebuild'])
             {
                 $value = $this->instances[$key];
+                $create = false;
             }
             else
             {
@@ -245,15 +253,35 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
                 $value = call_user_func_array($extender, [$value, $this]);
             }
         }
+        
+        if ($create && count($this->initializers) > 0)
+        {
+            foreach ($this->initializers as $initializer)
+            {
+                $value = call_user_func_array($initializer, [$value, $this]);
+            }
+        }
+        
+        $event = new ContainerEvent(
+            ContainerEvent::RESOLVED, 
+            [
+                'service' => $key,
+                'resolved_service' => $value, 
+                'initialized' => $create
+            ]
+        );
+        
+        $this->dispatch($event);
+        
+        $value = $event->getResolvedObject();
 
+        $this->resolved[$key] = true;
+        
         if ($this->bindings[$key]['shared'])
         {
             unset($this->extenders[$key]);
             $this->instances[$key] = $value;
         }
-        
-        $this->resolved[$key] = true;
-        $this->dispatch(new ContainerEvent(ContainerEvent::RESOLVED, ['service' => $key]));
         
         return $value;
     }
