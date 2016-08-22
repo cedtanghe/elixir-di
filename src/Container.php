@@ -272,7 +272,6 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
         );
         
         $this->dispatch($event);
-        
         $value = $event->getResolvedObject();
 
         $this->resolved[$key] = true;
@@ -626,6 +625,22 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
     }
     
     /**
+     * {@inheritdoc}
+     */
+    public function addInitializer(callable $value)
+    {
+        $this->initializers[] = $value;
+    }
+    
+    /**
+     * @return array
+     */
+    public function getInitializers()
+    {
+        return $this->initializers;
+    }
+    
+    /**
      * @param mixed $value
      * @return \Closure
      */
@@ -674,7 +689,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
         
         foreach ($keys as $key)
         {
-            $services[$key] = $raw ? $this->raw($key) : $this->get($key, ['throw' => false]);
+            $services[$key] = $options['raw'] ? $this->raw($key) : $this->get($key, ['throw' => false]);
         }
         
         return $data;
@@ -985,6 +1000,7 @@ class Container implements ContainerResolvableInterface, DispatcherInterface, \A
             'tags' => $this->tags,
             'provides' => $provides,
             'extenders' => array_keys($this->extenders),
+            'initializers' => $this->initializers,
             'contextual_bindings' => $contextualBindings
         ];
     }

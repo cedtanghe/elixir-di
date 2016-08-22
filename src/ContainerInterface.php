@@ -72,6 +72,11 @@ interface ContainerInterface
     public function extend($key, callable $value);
     
     /**
+     * @param callable $value
+     */
+    public function addInitializer(callable $value);
+    
+    /**
      * @param string $key
      * @param string $alias
      */
