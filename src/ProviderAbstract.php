@@ -2,23 +2,21 @@
 
 namespace Elixir\DI;
 
-use Elixir\DI\ProviderInterface;
-
 /**
  * @author Cédric Tanghe <ced.tanghe@gmail.com>
  */
-abstract class ProviderAbstract implements ProviderInterface 
+abstract class ProviderAbstract implements ProviderInterface
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $deferred = false;
-    
+
     /**
      * @var array
      */
     protected $provides = [];
-    
+
     /**
      * {@inheritdoc}
      */
@@ -26,7 +24,7 @@ abstract class ProviderAbstract implements ProviderInterface
     {
         return $this->deferred;
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +32,7 @@ abstract class ProviderAbstract implements ProviderInterface
     {
         return in_array($service, $this->provides());
     }
-    
+
     /**
      * {@inheritdoc}
      */

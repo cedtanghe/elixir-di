@@ -2,12 +2,10 @@
 
 namespace Elixir\DI;
 
-use Elixir\DI\ContainerInterface;
-
 /**
  * @author Cédric Tanghe <ced.tanghe@gmail.com>
  */
-interface ContainerAwareInterface 
+interface ContainerAwareInterface
 {
     /**
      * @param ContainerInterface $container

@@ -2,29 +2,28 @@
 
 namespace Elixir\DI;
 
-use Elixir\DI\ContainerInterface;
-
 /**
  * @author Cédric Tanghe <ced.tanghe@gmail.com>
  */
-interface ProviderInterface 
+interface ProviderInterface
 {
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeferred();
-    
+
     /**
      * @param ContainerInterface $container
      */
     public function register(ContainerInterface $container);
-    
+
     /**
      * @param string $service
-     * @return boolean
+     *
+     * @return bool
      */
     public function provided($service);
-    
+
     /**
      * @return array
      */

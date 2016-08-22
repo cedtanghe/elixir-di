@@ -2,61 +2,62 @@
 
 namespace Elixir\DI;
 
-use Elixir\DI\ProviderInterface;
-
 /**
  * @author Cédric Tanghe <ced.tanghe@gmail.com>
  */
-interface ContainerInterface 
+interface ContainerInterface
 {
     /**
      * @param ProviderInterface $provider
      */
     public function addProvider(ProviderInterface $provider);
-    
+
     /**
      * @param string $key
-     * @return boolean 
+     *
+     * @return bool
      */
     public function has($key);
 
     /**
      * @param string $key
-     * @param array $options
-     * @param mixed $default
-     * @return mixed 
+     * @param array  $options
+     * @param mixed  $default
+     *
+     * @return mixed
      */
     public function get($key, array $options = [], $default = null);
 
     /**
      * @param string $key
-     * @param mixed $value 
-     * @param array $options 
+     * @param mixed  $value
+     * @param array  $options
      */
     public function bind($key, $value, array $options = []);
-    
+
     /**
      * @param string $key
-     * @param mixed $value 
-     * @param array $options 
+     * @param mixed  $value
+     * @param array  $options
      */
     public function share($key, $value, array $options = []);
-    
+
     /**
      * @param string $key
-     * @param mixed $value 
-     * @param array $options 
+     * @param mixed  $value
+     * @param array  $options
      */
     public function instance($key, $value, array $options = []);
-    
+
     /**
-     * @param string $key 
+     * @param string $key
      */
     public function unbind($key);
-    
+
     /**
      * @param array $options
-     * @return array 
+     *
+     * @return array
      */
     public function all(array $options = []);
 
@@ -66,16 +67,16 @@ interface ContainerInterface
     public function replace(array $data);
 
     /**
-     * @param string $key
+     * @param string   $key
      * @param callable $value
      */
     public function extend($key, callable $value);
-    
+
     /**
      * @param callable $value
      */
     public function addInitializer(callable $value);
-    
+
     /**
      * @param string $key
      * @param string $alias
@@ -90,13 +91,14 @@ interface ContainerInterface
 
     /**
      * @param string $tag
-     * @param array $options
+     * @param array  $options
+     *
      * @return array
      */
     public function findByTag($tag, array $options = []);
-    
+
     /**
-     * @param ContainerInterface $container 
+     * @param ContainerInterface $container
      */
     public function merge(self $container);
 }
