@@ -54,13 +54,13 @@ class ServicesFactory
             'subscribers'
         ];
         
-        $bindService = true;
+        $bindServices = true;
         
         foreach (array_keys($config) as $key)
         {
             if (in_array($key, $reservedKeywords))
             {
-                $bindService = false;
+                $bindServices = false;
                 break;
             }
         }
@@ -87,7 +87,7 @@ class ServicesFactory
         }
         
         // Bind
-        if ($bindService || isset($config['bindings']))
+        if ($bindServices || isset($config['bindings']))
         {
             $services = isset($config['bindings']) ? $config['bindings'] : $config;
             
