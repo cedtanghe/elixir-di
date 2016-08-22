@@ -3,6 +3,7 @@
 namespace Elixir\DI;
 
 use Elixir\DI\ContainerInterface;
+use Elixir\DI\ContainerResolvableInterface;
 use Elixir\DI\ProviderInterface;
 use Elixir\Dispatcher\DispatcherInterface;
 use Elixir\Dispatcher\SubscriberInterface;
@@ -47,6 +48,7 @@ class ServicesFactory
             'providers',
             'bindings',
             'shared',
+            'converters',
             'tags',
             'aliases',
             'extenders',
@@ -112,10 +114,19 @@ class ServicesFactory
             }
         }
         
+        // Converters
+        if (isset($config['converters']) && ($this->container instanceof ContainerResolvableInterface))
+        {
+            foreach ($config['converters'] as $converter)
+            {
+                $this->container->addConverter($converter);
+            }
+        }
+        
         // Tags
         if (isset($config['tags']))
         {
-            foreach ($config['shared'] as $key => $tags)
+            foreach ($config['tags'] as $key => $tags)
             {
                 foreach ((array)$tags as $tag)
                 {
